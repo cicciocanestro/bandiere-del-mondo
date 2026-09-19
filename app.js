@@ -244,12 +244,15 @@ async function loadGlobalData() {
         showSourceBadge("online");
     } catch (error) {
         console.error("API REST non raggiungibile, uso i dati locali:", error);
-        globalCountries = [...FALLBACK_DATA];
+        globalCountries = FALLBACK_DATA;
         showSourceBadge("offline");
     }
 
     // Renderizza i bottoni/card dei continenti
     renderContinents();
+    if (activeContinent) {
+        selectContinent(activeContinent);
+    }
 }
 
 function renderContinents() {
@@ -316,8 +319,18 @@ function initCardTilt() {
     const canTilt = window.matchMedia && window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     if (!canTilt) return;
 
+    let currentTiltedCard = null;
+
     flagsGrid.addEventListener("mousemove", (e) => {
         const card = e.target.closest(".country-card");
+        
+        if (currentTiltedCard && currentTiltedCard !== card) {
+            const oldTilt = currentTiltedCard.querySelector(".card-tilt");
+            if (oldTilt) oldTilt.style.transform = "";
+        }
+        
+        currentTiltedCard = card;
+
         if (!card) return;
 
         const tilt = card.querySelector(".card-tilt");
@@ -330,7 +343,11 @@ function initCardTilt() {
     });
 
     flagsGrid.addEventListener("mouseleave", () => {
-        document.querySelectorAll(".country-card .card-tilt").forEach(t => t.style.transform = "");
+        if (currentTiltedCard) {
+            const tilt = currentTiltedCard.querySelector(".card-tilt");
+            if (tilt) tilt.style.transform = "";
+            currentTiltedCard = null;
+        }
     });
 }
 
@@ -468,7 +485,8 @@ function hideSourceBadge() {
 }
 
 function normalizeText(text) {
-    return text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    if (!text) return "";
+    return String(text).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
 function applySearch() {
