@@ -1,0 +1,12 @@
+# File locali di lavoro
+.env
+.DS_Store
+
+# Configurazione locale dell'agente
+.commandcode/
+
+# Stato locale della CLI Netlify
+.netlify/
+
+# Dipendenze
+node_modules/

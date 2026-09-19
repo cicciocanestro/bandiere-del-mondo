@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bandiere del Mondo — Esplora i Continenti</title>
+    <!-- Google Fonts: Inter per un look moderno e pulito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Icone Lucide per un tocco moderno -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="stars-background">
+        <div class="stars-field" aria-hidden="true"></div>
+    </div>
+    
+    <header class="hero">
+        <div class="container hero-container">
+            <div class="badge">
+                <i data-lucide="globe" class="badge-icon"></i>
+                <span>Esplora il Mondo</span>
+            </div>
+            <h1 id="main-title">Bandiere del Mondo</h1>
+            <p class="subtitle" id="main-subtitle">Un viaggio interattivo attraverso gli Stati del mondo. Seleziona un continente per scoprirne le bandiere, le capitali e i dati.</p>
+            
+            <div class="search-wrapper" id="search-wrapper" hidden>
+                <div class="action-bar">
+                    <button id="back-btn" class="back-btn">
+                        <i data-lucide="arrow-left"></i>
+                        Continenti
+                    </button>
+                    <div class="search-bar">
+                        <i data-lucide="search" class="search-icon"></i>
+                        <input type="text" id="search-input" placeholder="Cerca uno stato o una capitale..." autocomplete="off">
+                        <kbd class="kbd-hint" id="kbd-hint" aria-hidden="true"><span class="kbd-key">⌘</span>K</kbd>
+                        <button id="clear-search" class="clear-btn" style="display: none;">
+                            <i data-lucide="x"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="stats">
+                    <span id="country-counter"><strong id="active-count">0</strong> di <span id="total-count">0</span> Stati</span>
+                </div>
+                <div id="data-source-badge" class="source-badge" hidden>
+                    <i data-lucide="server" class="source-badge-icon"></i>
+                    <span id="data-source-text">Dati live dall'API REST</span>
+                    <button id="retry-fetch" class="retry-btn" type="button" hidden>
+                        <i data-lucide="refresh-cw" class="retry-btn-icon"></i>
+                        Riprova
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="continent-selector" class="continent-grid">
+            <!-- Le card dei continenti verranno iniettate qui tramite JavaScript -->
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <p>Inizializzazione mappa globale...</p>
+            </div>
+        </section>
+
+        <section id="flags-grid" class="flags-grid" hidden>
+            <!-- Le card delle bandiere verranno iniettate qui tramite JavaScript -->
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-content">
+            <p>&copy; 2026 Bandiere del Mondo. Creato con passione.</p>
+            <p class="credits">Dati forniti dall'API REST Countries Now e World Bank. Bandiere da FlagCDN. Sviluppato in Vanilla JS & CSS3 Grid.</p>
+        </div>
+    </footer>
+
+    <!-- Iniezione di Lucide Icons -->
+    <script>
+        lucide.createIcons();
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>
